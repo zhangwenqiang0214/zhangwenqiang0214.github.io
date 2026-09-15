@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 530" width="100%" role="img" aria-label="破解四层机制">
+<style>
+  .t{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;fill:#24292f}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;fill:#24292f}
+  .sub{fill:#6b7a8f}.red{fill:#e5484d}
+  .box{fill:none;stroke:#8b96a5;stroke-width:1.5}
+  .num{fill:#e5484d;opacity:.12}
+  .key{fill:#e5484d;opacity:.07}
+  @media (prefers-color-scheme:dark){
+    .t,.mono{fill:#e6edf3}.sub{fill:#9aa7b5}.box{stroke:#5b6673}
+  }
+</style>
+
+<text x="0" y="18" class="t" font-size="15" font-weight="600">破解的四层机制</text>
+
+<rect x="0" y="34" width="920" height="104" class="box" rx="8"/>
+<circle cx="34" cy="86" r="20" class="num"/>
+<text x="34" y="92" class="red" font-size="18" font-weight="700" text-anchor="middle">1</text>
+<text x="70" y="62" class="t" font-size="14" font-weight="600">dylib 注入 —— 让自己的代码进到进程里</text>
+<text x="70" y="86" class="t" font-size="12">在 prl_client_app 的 Mach-O 头部追加一条 LC_LOAD_DYLIB,指向 channel.cert。</text>
+<text x="70" y="106" class="t" font-size="12">dyld 启动程序时会加载它,其 __mod_init_func(208 字节 = 26 个构造函数)在 main() 之前自动执行。</text>
+<text x="70" y="128" class="mono sub" font-size="11">证据: 第 106 条 = 最后一条 LC_LOAD_DYLIB,追加在所有原始依赖之后</text>
+
+<rect x="0" y="150" width="920" height="104" class="box" rx="8"/>
+<circle cx="34" cy="202" r="20" class="num"/>
+<text x="34" y="208" class="red" font-size="18" font-weight="700" text-anchor="middle">2</text>
+<text x="70" y="178" class="t" font-size="14" font-weight="600">函数挂钩 —— 改写授权校验的结果</text>
+<text x="70" y="202" class="t" font-size="12">Parallels 用 Qt 编写,授权校验走 Qt 网络栈。该 dylib 链接 QtNetwork / QtCore / Security / CFNetwork。</text>
+<text x="70" y="222" class="t" font-size="12">构造函数在 main() 前改写导入表,把校验调用重定向到自己的实现 —— 程序「以为」问过服务器了。</text>
+<text x="70" y="244" class="mono sub" font-size="11">证据: 符号表被加壳保护,nm 报 5748 个导入但名字全是密文,节名被抹空</text>
+
+<rect x="0" y="266" width="920" height="90" class="box" rx="8"/>
+<circle cx="34" cy="311" r="20" class="num"/>
+<text x="34" y="317" class="red" font-size="18" font-weight="700" text-anchor="middle">3</text>
+<text x="70" y="294" class="t" font-size="14" font-weight="600">伪造信任锚 —— 让假授权能通过验签</text>
+<text x="70" y="318" class="t" font-size="12">授权数据是签名的,程序会验签。破解装了一条 4 级证书链作为 .pubkey,配合加密的 licenses.db。</text>
+<text x="70" y="344" class="mono sub" font-size="11">desktop.parallels.com ← Parallels Desktop CA ← Paralels Issuing CA #1 ← Parallels External root CA</text>
+
+<rect x="0" y="368" width="920" height="126" class="key" rx="8"/>
+<rect x="0" y="368" width="920" height="126" class="box" rx="8" stroke="#e5484d" stroke-width="2"/>
+<circle cx="34" cy="431" r="20" class="num"/>
+<text x="34" y="437" class="red" font-size="18" font-weight="700" text-anchor="middle">4</text>
+<text x="70" y="396" class="t" font-size="14" font-weight="600">重签名 —— 这一层是整件事的死穴</text>
+<text x="70" y="420" class="t" font-size="12">只要改动 Mach-O 哪怕一个字节,原签名即失效,macOS 拒绝加载。必须重签。</text>
+<text x="70" y="440" class="t" font-size="12">但破解没有 Parallels 私钥 —— 只能用 <tspan class="red" font-weight="600">adhoc 签名</tspan>(无身份、无公证)。</text>
+<text x="70" y="466" class="red" font-size="12" font-weight="600">这条约束是物理性的、绕不过去的,它直接产生了全部可观测证据:</text>
+<text x="70" y="486" class="mono sub" font-size="11">Signature=adhoc · TeamIdentifier=not set · spctl → rejected · 安装脚本必须 xattr -cr</text>
+
+<text x="0" y="522" class="t" font-size="12">而 <tspan class="mono">certs/</tspan> 里那 32 个文件,正是<tspan font-weight="600">为 32 个 Parallels 版本预先算好的「补丁偏移表 + 代码签名页哈希表」</tspan> —— 这就是「小版本升级还能用」的真相。</text>
+</svg>

