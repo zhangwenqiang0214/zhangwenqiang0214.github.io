@@ -1,0 +1,11 @@
+# Butterfly 主题配置覆盖
+# 只写需要改动的项,其余继承 node_modules/hexo-theme-butterfly/_config.yml
+
+# 社交平台分享卡片
+# twitter_card 不设置时 Hexo 默认输出 summary(小图),
+# 设为 summary_large_image 才会在 X 上显示大图卡片。
+# og:image 取自文章 front-matter 的 cover 字段(必须是位图,SVG 不被支持)。
+Open_Graph_meta:
+  enable: true
+  option:
+    twitter_card: summary_large_image
