@@ -168,8 +168,9 @@ rightside_scroll_percent: true
 comments:
   use: Giscus
   text: true
-  # 进入视口才加载，不拖慢首屏
-  lazyload: true
+  # 不懒加载：主题的 IntersectionObserver 观察空容器(高度0)时不触发，
+  # 而 giscus 脚本本身很小且 async，直接加载成本可忽略
+  lazyload: false
   count: false
   card_post_count: false
 
