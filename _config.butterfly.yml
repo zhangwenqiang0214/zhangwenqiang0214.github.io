@@ -1,7 +1,182 @@
 # Butterfly 主题配置覆盖
 # 只写需要改动的项,其余继承 node_modules/hexo-theme-butterfly/_config.yml
 
+# --------------------------------------
+# 导航
+# --------------------------------------
+menu:
+  首页: / || fas fa-home
+  归档: /archives/ || fas fa-archive
+  分类: /categories/ || fas fa-folder-open
+  标签: /tags/ || fas fa-tags
+  关于: /about/ || fas fa-paper-plane
+
+# --------------------------------------
+# 图片
+# --------------------------------------
+favicon: /img/favicon.png
+
+avatar:
+  img: /img/avatar.jpg
+  effect: false
+
+# 各页面顶部大横幅
+default_top_img: /img/banner.jpg
+index_img: /img/banner.jpg
+archive_img: /img/banner.jpg
+tag_img: /img/banner.jpg
+category_img: /img/banner.jpg
+
+# 文章封面（front-matter 没写 cover 时随机取一张）
+cover:
+  index_enable: true
+  aside_enable: true
+  archives_enable: true
+  default_cover:
+    - /img/cover-1.jpg
+    - /img/cover-2.jpg
+    - /img/cover-3.jpg
+    - /img/cover-4.jpg
+
+error_404:
+  enable: true
+  subtitle: '这里大概什么也没有'
+
+# --------------------------------------
+# 首页
+# --------------------------------------
+# 首页副标题：接「今日诗词」API，每次刷新随机一句古诗
+subtitle:
+  enable: true
+  effect: true
+  typed_option:
+  # 3 = jinrishici.com（今日诗词）
+  source: 3
+  sub:
+    - 记录一些折腾过的东西
+
+# 封面左右交替
+index_layout: 3
+
+index_post_content:
+  method: 3
+  length: 300
+
+# --------------------------------------
+# 配色：黛青 + 赭黄（呼应黑白街拍横幅与秋色封面）
+# --------------------------------------
+theme_color:
+  enable: true
+  main: '#5b8291'
+  paginator: '#c08552'
+  text_selection: '#c08552'
+  link_color: '#5b8291'
+  hr_color: '#c08552'
+  toc_color: '#c08552'
+  code_foreground: '#c35a4a'
+  blockquote_padding_color: '#c08552'
+  meta_color: '#9a9a9a'
+
+# --------------------------------------
+# 字体：霞鹜文楷（开源中文字体）
+# --------------------------------------
+font:
+  global_font_size: 16px
+  font_family: "'LXGW WenKai Screen', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif"
+
+inject:
+  head:
+    - <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/style.css">
+
+# --------------------------------------
+# 侧栏
+# --------------------------------------
+aside:
+  card_author:
+    enable: true
+    description: 折腾是生活的一部分。<br>写点代码，修点东西，记一些没什么用但有意思的事。
+    button:
+      enable: true
+      icon: fab fa-github
+      text: GitHub
+      link: https://github.com/zhangwenqiang0214
+  card_announcement:
+    enable: true
+    content: 这是我的自留地，随便逛。
+  card_recent_post:
+    enable: true
+    limit: 5
+  card_categories:
+    enable: true
+    limit: 8
+  card_tags:
+    enable: true
+    limit: 30
+    color: true
+
+# --------------------------------------
+# 文章
+# --------------------------------------
+toc:
+  post: true
+  page: true
+  number: false
+  expand: true
+  scroll_percent: true
+
+post_copyright:
+  enable: true
+  author_href: https://zhangwenqiang0214.github.io
+  license: CC BY-NC-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+# 标题前缀小图标
+beautify:
+  enable: true
+  field: post
+
+# --------------------------------------
+# 功能
+# --------------------------------------
+# 本地搜索（需 hexo-generator-searchdb 插件）
+search:
+  use: local_search
+  placeholder: 搜点什么…
+  local_search:
+    preload: false
+    top_n_per_article: 2
+
+# 字数统计 / 阅读时长（需 hexo-wordcount 插件）
+wordcount:
+  enable: true
+  post_wordcount: true
+  min2read: true
+  total_wordcount: true
+
+# 深色模式跟随系统
+darkmode:
+  enable: true
+  button: true
+  autoChangeMode: 1
+
+readmode: true
+rightside_scroll_percent: true
+
+# --------------------------------------
+# 页脚
+# --------------------------------------
+footer:
+  owner:
+    enable: true
+    since: 2026
+  copyright:
+    enable: true
+    version: false
+  custom_text: 写给自己看的
+
+# --------------------------------------
 # 社交平台分享卡片
+# --------------------------------------
 # twitter_card 不设置时 Hexo 默认输出 summary(小图),
 # 设为 summary_large_image 才会在 X 上显示大图卡片。
 # og:image 取自文章 front-matter 的 cover 字段(必须是位图,SVG 不被支持)。

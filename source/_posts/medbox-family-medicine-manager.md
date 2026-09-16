@@ -7,6 +7,7 @@ tags:
   - SQLite
   - 大模型应用
   - 自建服务
+cover: /img/cover-1.jpg
 categories:
   - 折腾记录
 ---

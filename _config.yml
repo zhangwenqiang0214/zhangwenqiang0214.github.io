@@ -4,8 +4,8 @@
 
 # Site
 title: zhangwenqiang
-subtitle: 网络安全 · 自动化 · 折腾记录
-description: 安全工程师的技术笔记与工具
+subtitle: 记录一些折腾过的东西
+description: 个人博客。写点代码，修点东西，记一些没什么用但有意思的事。
 keywords:
 author: zhangwenqiang
 language: zh-CN
@@ -102,3 +102,10 @@ theme: butterfly
 ## Docs: https://hexo.io/docs/one-command-deployment
 
 # 部署由 GitHub Actions 处理,见 .github/workflows/deploy.yml
+
+# 本地搜索索引（hexo-generator-searchdb）
+search:
+  path: search.xml
+  field: post
+  content: true
+  format: html
