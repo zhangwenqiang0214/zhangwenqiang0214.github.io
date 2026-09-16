@@ -36,13 +36,21 @@ categories:
 
 ## 数据是怎么流过来的
 
-```
-路由器  softflowd（NetFlow v9，1:64 采样）
-   ↓ UDP
-云服务器  goflow2 → Kafka → ClickHouse
-   ↓
-        Grafana 大屏
-```
+{% mermaid %}
+flowchart LR
+  subgraph H["家里"]
+    R["路由器<br/>softflowd<br/>NetFlow v9 · 1:64 采样"]
+  end
+  subgraph C["云服务器"]
+    G["goflow2"] --> K["Kafka"] --> D[("ClickHouse")]
+  end
+  R -- "UDP :2055" --> G
+  D --> V["Grafana 大屏"]
+
+  style R fill:#eef3f5,stroke:#5b8291
+  style D fill:#f7f0e6,stroke:#c08552
+  style V fill:#f7f0e6,stroke:#c08552
+{% endmermaid %}
 
 **路由器这端**跑 `softflowd`，监听内网桥接口。它不复制流量内容，只记录「谁跟谁、走哪个端口、传了多少字节」这样的元数据，然后按 NetFlow v9 格式发出去。
 

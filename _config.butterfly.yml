@@ -9,6 +9,9 @@ menu:
   归档: /archives/ || fas fa-archive
   分类: /categories/ || fas fa-folder-open
   标签: /tags/ || fas fa-tags
+  更多||fas fa-ellipsis:
+    相册: /gallery/ || fas fa-images
+    友链: /link/ || fas fa-link
   关于: /about/ || fas fa-paper-plane
 
 # --------------------------------------
@@ -139,6 +142,16 @@ beautify:
 # --------------------------------------
 # 功能
 # --------------------------------------
+# 流程图。文章里用 {% mermaid %} ... {% endmermaid %} 标签写。
+# ⚠️ 不要用 ```mermaid 代码块：主题的转换函数找的是 `pre > code.mermaid`，
+#    而本站用 highlight.js，产出的是表格式 <figure class="highlight"> 结构，匹配不上。
+mermaid:
+  enable: true
+  code_write: false
+  theme:
+    light: neutral
+    dark: dark
+
 # 图片点击放大。medium_zoom 比 fancybox 克制得多：
 # 只做平滑放大 + 背景压暗，没有画廊边框、箭头和计数器
 lightbox: medium_zoom

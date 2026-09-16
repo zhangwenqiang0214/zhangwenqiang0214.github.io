@@ -1,0 +1,17 @@
+# 友链数据。页面会自动读这个文件渲染。
+# ⚠️ link_list 必须是数组，留 null 会让主题模板报错（对 null 取 .length）。
+#    没有友链时写 [] ，不要留空。
+#
+# 加友链时照这个格式往 link_list 里加：
+#
+# - class_name: 朋友
+#   class_desc: 一些认识的人
+#   link_list:
+#     - name: 某人的博客
+#       link: https://example.com
+#       avatar: https://example.com/avatar.png
+#       descr: 一句话介绍
+
+- class_name: 朋友
+  class_desc: 还空着
+  link_list: []
