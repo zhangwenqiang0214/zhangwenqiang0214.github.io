@@ -1,6 +1,6 @@
 ---
 title: 一封删库通知背后的四年：Manus 的暴富、出走、卖身与被夺回
-date: 2026-08-16 00:30:00
+date: 2026-08-16 10:00:00
 cover: /img/cover-manus.jpg
 tags:
   - AI
