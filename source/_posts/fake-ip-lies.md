@@ -4,6 +4,7 @@ date: 2026-09-16 17:00:00
 tags:
   - 网络
   - 排查方法
+cover: /img/cover-fakeip.jpg
 categories:
   - 折腾记录
 ---

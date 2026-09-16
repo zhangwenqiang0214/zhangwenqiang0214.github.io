@@ -5,6 +5,7 @@ tags:
   - Three.js
   - 可视化
   - 自己写的小东西
+cover: /img/cover-solar.jpg
 categories:
   - 折腾记录
 ---

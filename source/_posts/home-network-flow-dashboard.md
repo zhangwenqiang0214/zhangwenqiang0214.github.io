@@ -6,6 +6,7 @@ tags:
   - OpenWrt
   - ClickHouse
   - Grafana
+cover: /img/cover-netflow.jpg
 categories:
   - 折腾记录
 ---

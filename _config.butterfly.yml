@@ -172,7 +172,7 @@ footer:
   copyright:
     enable: true
     version: false
-  custom_text: 写给自己看的
+  custom_text: 本站文章由 Claude 拟题并转写，内容源自我与它的技术探讨和脑暴
 
 # --------------------------------------
 # 社交平台分享卡片

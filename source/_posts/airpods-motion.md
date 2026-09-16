@@ -5,6 +5,7 @@ tags:
   - macOS
   - Swift
   - 自己写的小东西
+cover: /img/cover-airpods.jpg
 categories:
   - 折腾记录
 ---
