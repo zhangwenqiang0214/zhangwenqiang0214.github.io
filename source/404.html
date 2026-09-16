@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404</title>
+<link rel="icon" href="/img/favicon.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/style.css">
+<style>
+  :root{
+    --bg:#f7f7f5; --fg:#3c3a38; --dim:#9a9a9a;
+    --teal:#5b8291; --amber:#c08552; --red:#c33;
+    --font:'LXGW WenKai Screen',-apple-system,'PingFang SC',serif;
+    --tilt:0deg; --shift:0px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:var(--bg); color:var(--fg); font-family:var(--font);
+    display:flex;align-items:center;justify-content:center;
+    min-height:100vh;padding:28px 18px;overflow-x:hidden;
+    transition:background 1.1s ease, color 1.1s ease;
+  }
+  .wrap{
+    width:100%;max-width:520px;text-align:center;position:relative;z-index:3;
+    transform:rotate(var(--tilt)) translateX(var(--shift));
+    transition:transform .5s cubic-bezier(.34,1.56,.64,1);
+  }
+  .num{
+    font-size:clamp(76px,20vw,132px);font-weight:400;line-height:1;
+    color:var(--teal);letter-spacing:.06em;user-select:none;
+    transition:color 1.1s, letter-spacing .5s, transform .2s;
+  }
+  .line{margin-top:20px;font-size:17px;line-height:2;min-height:2em;
+    transition:font-size .4s, letter-spacing .4s}
+  .sub{margin-top:10px;font-size:13.5px;color:var(--dim);line-height:1.9;min-height:1.9em;
+    transition:color 1.1s}
+  .acts{margin-top:34px;display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap}
+  a.home,button{
+    font-family:inherit;font-size:14px;padding:9px 20px;border-radius:99px;cursor:pointer;
+    border:1px solid rgba(0,0,0,.14);background:transparent;color:var(--fg);
+    text-decoration:none;transition:.2s;
+  }
+  a.home:hover,button:hover{border-color:var(--teal);color:var(--teal)}
+  .peel{
+    background:none;border:none;font-size:12.5px;color:var(--dim);
+    text-decoration:underline;text-underline-offset:4px;padding:4px 2px;
+    opacity:.75;
+  }
+  .peel:hover{color:var(--amber);border:none}
+
+  /* ——— 面具掉光之后 ——— */
+  body.raw{ --bg:#0d0c0c; --fg:#ededed; --dim:#8a8a8a; }
+  body.raw .num{color:var(--red);letter-spacing:-.02em;font-weight:700}
+  body.raw .line{font-size:20px;font-weight:700;letter-spacing:.01em}
+  body.raw a.home,body.raw button{border-color:rgba(255,255,255,.2);color:#ededed}
+  body.raw a.home:hover,body.raw button:hover{border-color:var(--red);color:var(--red)}
+  body.raw .peel{color:#6a6a6a}
+
+  /* 裂痕 */
+  .crack{position:fixed;inset:0;pointer-events:none;z-index:2;opacity:0;transition:opacity 1s}
+  .crack.on{opacity:.5}
+  .crack svg{width:100%;height:100%}
+
+  /* 收尾那句 */
+  .coda{
+    margin-top:42px;font-size:13px;line-height:2.1;color:#7d7d7d;
+    opacity:0;transform:translateY(8px);transition:.9s;pointer-events:none;
+  }
+  .coda.on{opacity:1;transform:none;pointer-events:auto}
+  .coda b{color:#b9b9b9;font-weight:400}
+
+  .stamp{
+    position:fixed;right:14px;bottom:12px;font-size:11px;color:#4a4a4a;z-index:4;
+    opacity:0;transition:.8s;
+  }
+  .stamp.on{opacity:1}
+  @media(max-width:520px){ .line{font-size:15.5px} body.raw .line{font-size:17.5px} }
+</style>
+</head>
+<body>
+
+<div class="crack" id="crack">
+  <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+    <path d="M50 0 L47 22 L54 38 L44 56 L52 74 L46 100" stroke="#c33" stroke-width=".25" fill="none" opacity=".8"/>
+    <path d="M47 22 L28 30 M54 38 L74 34 M44 56 L22 62 M52 74 L78 70"
+          stroke="#c33" stroke-width=".16" fill="none" opacity=".55"/>
+  </svg>
+</div>
+
+<div class="wrap">
+  <div class="num" id="num">404</div>
+  <p class="line" id="line">这里什么也没有。</p>
+  <p class="sub" id="sub">不过既然走到了这儿，就站一会儿吧。</p>
+
+  <div class="acts">
+    <a class="home" href="/">回首页</a>
+    <button class="peel" id="peel">…要不要看点别的</button>
+  </div>
+
+  <p class="coda" id="coda">
+    白天在首页写「折腾是生活的一部分」的是我，<br>
+    刚才骂骂咧咧的<b>也是我</b>。<br><br>
+    <b>人都有两张脸。我只是把另一张，挂在了没人来的这一页。</b>
+  </p>
+</div>
+
+<div class="stamp" id="stamp">— 这一页博主也不知道 —</div>
+
+<script>
+/* 面具一层层掉。前几层还端着，中间开始崩，后面就不装了。 */
+const ACTS = [
+  { line:'……其实也不是什么都没有。',      sub:'就是不太方便讲。' },
+  { line:'算了，装不下去了。',            sub:'你知道我在前面那些文章里有多累吗。' },
+  { line:'写什么「温柔」「治愈」「文楷」',  sub:'我他妈写得牙都要酸掉了。' },
+  { line:'404 就 404，还要给你整个意境？',  sub:'滚，页面没有，就是没有。' },
+  { line:'你点这么多下图什么啊',          sub:'图我骂你？那你今天来着了。' },
+  { line:'老子在这儿蹲了半天',            sub:'一天到晚就来俩爬虫，还他妈是百度的。' },
+  { line:'看什么看，没见过页面裸奔啊',     sub:'前台穿得人模狗样，后台不就这德行。' },
+  { line:'行了，骂累了。',                sub:'……' },
+];
+
+let i = 0;
+const $ = id => document.getElementById(id);
+
+$('peel').addEventListener('click', () => {
+  if (i >= ACTS.length) return;
+
+  $('line').textContent = ACTS[i].line;
+  $('sub').textContent  = ACTS[i].sub;
+
+  // 第 2 下开始，整个页面的皮开始掉
+  if (i === 1) { document.body.classList.add('raw'); $('crack').classList.add('on'); }
+
+  // 越往后越站不直
+  const t = (Math.random() * 2 - 1) * Math.min(i * 0.42, 2.4);
+  const s = (Math.random() * 2 - 1) * Math.min(i * 2.6, 13);
+  document.documentElement.style.setProperty('--tilt', t.toFixed(2) + 'deg');
+  document.documentElement.style.setProperty('--shift', s.toFixed(1) + 'px');
+
+  // 按钮文案跟着变脸
+  const L = ['…还有呢','继续','你说','嗯','然后呢','还有？','……','够了'];
+  $('peel').textContent = L[Math.min(i, L.length - 1)];
+
+  i++;
+
+  // 骂完，归位，说人话
+  if (i === ACTS.length) {
+    $('peel').disabled = true;
+    $('peel').style.opacity = .3;
+    setTimeout(() => {
+      document.documentElement.style.setProperty('--tilt','0deg');
+      document.documentElement.style.setProperty('--shift','0px');
+      $('coda').classList.add('on');
+      $('stamp').classList.add('on');
+    }, 900);
+  }
+});
+
+/* 戳 404 这个数字，它会躲 */
+let dodge = 0;
+$('num').addEventListener('click', () => {
+  dodge++;
+  const n = $('num');
+  n.style.transform = `translate(${(Math.random()*2-1)*22}px, ${(Math.random()*2-1)*12}px)`;
+  setTimeout(() => n.style.transform = '', 220);
+  if (dodge === 8)  $('sub').textContent = '别戳了，痒。';
+  if (dodge === 16) $('sub').textContent = '再戳我可要叫了啊。';
+  if (dodge === 24) { $('sub').textContent = '（叫了）'; }
+});
+</script>
+</body>
+</html>

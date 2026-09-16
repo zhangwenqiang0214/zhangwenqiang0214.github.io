@@ -38,9 +38,9 @@ cover:
     - /img/cover-3.jpg
     - /img/cover-4.jpg
 
+# 用 source/404.html 那个自定义彩蛋页，主题内置的关掉
 error_404:
-  enable: true
-  subtitle: '这里大概什么也没有'
+  enable: false
 
 # --------------------------------------
 # 首页
