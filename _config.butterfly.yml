@@ -163,6 +163,28 @@ readmode: true
 rightside_scroll_percent: true
 
 # --------------------------------------
+# 评论：Giscus（基于 GitHub Discussions）
+# --------------------------------------
+comments:
+  use: Giscus
+  text: true
+  # 进入视口才加载，不拖慢首屏
+  lazyload: true
+  count: false
+  card_post_count: false
+
+giscus:
+  repo: zhangwenqiang0214/zhangwenqiang0214.github.io
+  repo_id: MDEwOlJlcG9zaXRvcnkyNzQyNzk4NTU=
+  # Announcements 分类：只有仓库主人能新建讨论，避免被人刷空帖
+  category_id: DIC_kwDOEFktr84DFufb
+  light_theme: light
+  dark_theme: transparent_dark
+  option:
+    data-lang: zh-CN
+    data-input-position: top
+
+# --------------------------------------
 # 页脚
 # --------------------------------------
 footer:
