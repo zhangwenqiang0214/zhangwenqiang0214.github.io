@@ -109,3 +109,14 @@ search:
   field: post
   content: true
   format: html
+
+# RSS 订阅
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  content: true
+
+# 站点地图（给搜索引擎）
+sitemap:
+  path: sitemap.xml

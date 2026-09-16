@@ -1,0 +1,20 @@
+/* 内嵌视频容器：B站 iframe 与自托管 video 共用，16:9 自适应 */
+.embed-video{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  margin:1.6rem 0;
+  border-radius:10px;
+  overflow:hidden;
+  background:#0d0f12;
+  box-shadow:0 4px 18px rgba(0,0,0,.14);
+}
+.embed-video iframe,
+.embed-video video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+  display:block;
+}

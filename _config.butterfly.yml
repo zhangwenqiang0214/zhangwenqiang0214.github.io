@@ -87,6 +87,7 @@ font:
 inject:
   head:
     - <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/style.css">
+    - <link rel="stylesheet" href="/css/custom.css">
 
 # --------------------------------------
 # 侧栏
@@ -138,6 +139,16 @@ beautify:
 # --------------------------------------
 # 功能
 # --------------------------------------
+# 图片点击放大。medium_zoom 比 fancybox 克制得多：
+# 只做平滑放大 + 背景压暗，没有画廊边框、箭头和计数器
+lightbox: medium_zoom
+
+# 图片懒加载，用浏览器原生实现，不引入额外 JS
+lazyload:
+  enable: true
+  native: true
+  field: site
+
 # 本地搜索（需 hexo-generator-searchdb 插件）
 search:
   use: local_search
