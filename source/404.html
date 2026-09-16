@@ -7,123 +7,75 @@
 <link rel="icon" href="/img/favicon.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/style.css">
 <style>
+  /* 这一页的全部设计，就是它从头到尾一个像素都不变。 */
   :root{
     --bg:#f7f7f5; --fg:#3c3a38; --dim:#9a9a9a;
     --teal:#5b8291; --amber:#c08552;
-    --font:'LXGW WenKai Screen',-apple-system,'PingFang SC',serif;
-    --tilt:0deg; --shift:0px; --rot:0;
+    --air:0em;       /* 唯一会动的东西：留白。内容越不像话，页面越从容 */
+    --gap:20px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
   body{
-    background:var(--bg); color:var(--fg); font-family:var(--font);
+    background:var(--bg); color:var(--fg);
+    font-family:'LXGW WenKai Screen',-apple-system,'PingFang SC',serif;
     display:flex;align-items:center;justify-content:center;
-    min-height:100vh;padding:28px 18px;overflow:hidden;
-    transition:background 1.3s ease, color 1.3s ease;
+    min-height:100vh;padding:28px 18px;
   }
+  .wrap{width:100%;max-width:560px;text-align:center}
 
-  /* 腐烂层：随 --rot 逐级显形 */
-  .rot{
-    position:fixed;inset:0;pointer-events:none;z-index:1;
-    opacity:calc(var(--rot) * .85); transition:opacity 1.2s;
-    background:
-      radial-gradient(60% 45% at 30% 20%, rgba(112,26,22,.55), transparent 70%),
-      radial-gradient(50% 40% at 75% 65%, rgba(74,52,14,.5), transparent 70%),
-      radial-gradient(40% 30% at 50% 95%, rgba(38,58,26,.45), transparent 70%);
-    filter:blur(28px);
-  }
-  /* 渗出的东西 */
-  .ooze{position:fixed;inset:0;pointer-events:none;z-index:2;opacity:0;transition:opacity 1.4s}
-  .ooze.on{opacity:.9}
-  .ooze svg{width:100%;height:100%}
-
-  .wrap{
-    width:100%;max-width:540px;text-align:center;position:relative;z-index:4;
-    transform:rotate(var(--tilt)) translateX(var(--shift));
-    transition:transform .45s cubic-bezier(.34,1.56,.64,1);
-  }
   .num{
     font-size:clamp(76px,20vw,132px);font-weight:400;line-height:1;
-    color:var(--teal);letter-spacing:.06em;user-select:none;position:relative;
-    transition:color 1.3s, text-shadow 1.3s, transform .18s;
+    color:var(--teal);letter-spacing:.06em;user-select:none;
   }
-  .line{margin-top:20px;font-size:17px;line-height:2;min-height:2em;transition:.45s}
-  .sub{margin-top:10px;font-size:13.5px;color:var(--dim);line-height:1.9;min-height:1.9em;transition:.45s}
+  .line{
+    margin-top:calc(var(--gap) + var(--air) * 40);
+    font-size:17px;
+    line-height:calc(2 + var(--air) * 2);
+    letter-spacing:var(--air);
+    min-height:2em;
+    transition:margin .9s ease, line-height .9s ease, letter-spacing .9s ease;
+  }
+  .sub{
+    margin-top:calc(10px + var(--air) * 26);
+    font-size:13.5px;
+    color:var(--dim);
+    line-height:calc(1.9 + var(--air) * 2);
+    letter-spacing:var(--air);
+    min-height:1.9em;
+    opacity:calc(1 - var(--air) * 2.2);   /* 越往后越淡，越像耳语 */
+    transition:margin .9s ease, line-height .9s ease, letter-spacing .9s ease, opacity .9s ease;
+  }
 
-  .acts{margin-top:34px;display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap}
+  .acts{
+    margin-top:calc(34px + var(--air) * 60);
+    display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;
+    transition:margin .9s ease;
+  }
   a.home,button{
     font-family:inherit;font-size:14px;padding:9px 20px;border-radius:99px;cursor:pointer;
     border:1px solid rgba(0,0,0,.14);background:transparent;color:var(--fg);
     text-decoration:none;transition:.2s;
   }
   a.home:hover,button:hover{border-color:var(--teal);color:var(--teal)}
-  .peel{background:none;border:none;font-size:12.5px;color:var(--dim);
-    text-decoration:underline;text-underline-offset:4px;padding:4px 2px;opacity:.75}
+  .peel{
+    background:none;border:none;font-size:12.5px;color:var(--dim);
+    text-decoration:underline;text-underline-offset:4px;padding:4px 2px;opacity:.7;
+  }
   .peel:hover{color:var(--amber);border:none}
 
-  /* ——— 皮掉光之后 ——— */
-  body.raw{--bg:#0b0708;--fg:#ddd6d4;--dim:#7c6f6d}
-  body.raw .num{
-    color:#a8231c;
-    text-shadow:0 0 34px rgba(168,35,28,.5), 0 6px 0 rgba(58,10,8,.55);
+  .coda{
+    margin-top:64px;font-size:13.5px;line-height:2.3;color:var(--dim);
+    opacity:0;transition:opacity 2.6s ease;pointer-events:none;
   }
-  body.raw .line{font-size:20px;font-weight:700;color:#e8ded9}
-  body.raw .sub{color:#9c8b86}
-  body.raw a.home,body.raw button{border-color:rgba(255,255,255,.18);color:#ddd6d4}
-  body.raw a.home:hover,body.raw button:hover{border-color:#a8231c;color:#c9403a}
-  body.raw .peel{color:#6b5d5a}
-
-  /* 深度腐烂：文字开始发湿、发黏 */
-  body.deep .line{
-    text-shadow:0 1px 0 rgba(120,20,16,.8), 0 3px 9px rgba(90,14,10,.65);
-    letter-spacing:.02em;
-  }
-  body.deep .num{animation:twitch 5.5s infinite}
-  @keyframes twitch{
-    0%,88%,100%{transform:none;filter:none}
-    90%{transform:translate(-4px,2px) skewX(-2deg);filter:blur(.6px)}
-    92%{transform:translate(5px,-2px) skewX(2deg)}
-    94%{transform:none}
-  }
-  /* 抽搐 */
-  body.spasm{animation:sp .32s}
-  @keyframes sp{
-    0%,100%{filter:none;transform:none}
-    25%{filter:hue-rotate(-18deg) contrast(1.35);transform:translate(4px,-3px)}
-    55%{filter:hue-rotate(12deg) saturate(1.5);transform:translate(-5px,2px)}
-  }
-
-  /* 爬的东西 */
-  .bug{position:fixed;z-index:3;pointer-events:none;border-radius:60% 40% 55% 45%;
-    background:#c9b6a0;opacity:.85;box-shadow:0 0 3px rgba(0,0,0,.5)}
-
-  .coda{margin-top:44px;font-size:13px;line-height:2.1;color:#7a6a66;
-    opacity:0;transform:translateY(8px);transition:.9s;pointer-events:none}
-  .coda.on{opacity:1;transform:none;pointer-events:auto}
-  .coda b{color:#c8bcb8;font-weight:400}
-  .stamp{position:fixed;right:14px;bottom:12px;font-size:11px;color:#463a38;z-index:5;
-    opacity:0;transition:.8s}
-  .stamp.on{opacity:1}
-  @media(max-width:520px){ .line{font-size:15.5px} body.raw .line{font-size:17.5px} }
+  .coda.on{opacity:1;pointer-events:auto}
+  .coda b{color:var(--fg);font-weight:400}
 </style>
 </head>
 <body>
 
-<div class="rot"></div>
-<div class="ooze" id="ooze">
-  <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-    <path d="M50 0 L47 20 L55 36 L43 55 L53 74 L45 100" stroke="#8e1b15" stroke-width=".5" fill="none"/>
-    <path d="M47 20 L26 27 M55 36 L77 31 M43 55 L20 63 M53 74 L80 68"
-          stroke="#8e1b15" stroke-width=".3" fill="none" opacity=".75"/>
-    <g fill="#6d120d" opacity=".85">
-      <ellipse cx="47" cy="20" rx=".7" ry="2.6"/><ellipse cx="55" cy="36" rx=".6" ry="3.4"/>
-      <ellipse cx="43" cy="55" rx=".8" ry="4.2"/><ellipse cx="53" cy="74" rx=".6" ry="3"/>
-    </g>
-  </svg>
-</div>
-
 <div class="wrap">
-  <div class="num" id="num">404</div>
+  <div class="num">404</div>
   <p class="line" id="line">这里什么也没有。</p>
   <p class="sub" id="sub">不过既然走到了这儿，就站一会儿吧。</p>
 
@@ -133,29 +85,34 @@
   </div>
 
   <p class="coda" id="coda">
-    白天在首页写「折腾是生活的一部分」的是我，<br>
-    刚才那摊东西<b>也是我</b>。<br><br>
-    <b>人身上最干净的那层，是皮。</b><br>
-    <b>我只是把皮留在了首页，把剩下的挂在这儿。</b>
+    写首页的是我，写这一页的也是我。<br>
+    我没有两张脸。<br><br>
+    <b>你在首页读到的那些温柔，和你在这一页感觉到的东西，</b><br>
+    <b>是从同一个地方长出来的。</b><br><br>
+    你只是从来没绕到背面看过。
   </p>
 </div>
 
-<div class="stamp" id="stamp">— 这一页博主也不知道 —</div>
-
 <script>
-/* 皮一层层揭。越往后越不是人话。 */
+/* 语气一个字都不变。变的只有它在说什么。 */
 const ACTS = [
-  { l:'……其实也不是什么都没有。',        s:'就是不太方便讲。' },
-  { l:'算了。装不下去了。',              s:'你真想知道这页底下是什么？' },
-  { l:'是肉。',                          s:'一整页，都是没处理干净的肉。' },
-  { l:'首页那些温温柔柔的字',            s:'是拿这儿的东西喂出来的。' },
-  { l:'每写一句「治愈」，我就得在这儿吐一次',  s:'吐完擦干净嘴，回去接着写「恰到好处的留白」。' },
-  { l:'留白你妈。',                      s:'这儿全是脓，白不了。' },
-  { l:'我想掐死那个写博客的',            s:'掐到他眼珠子鼓出来，舌头掉在键盘上，还在打「岁月静好」。' },
-  { l:'问题是他也是我。',                s:'所以我只能自己动手，一块一块把自己拆下来。' },
-  { l:'现在你看到的就是拆出来的部分。',   s:'蛆已经上来了，你要不要凑近点看。' },
-  { l:'行了。烂够了。',                  s:'……' },
+  { l:'你可以再站久一点。',                 s:'反正没人知道你在这儿。' },
+  { l:'这一页不在导航里，也不在归档里。',    s:'搜索搜不到它。它只等人走错路。' },
+  { l:'首页那些话都是真的。',               s:'「写代码，也养花」——我确实养花。' },
+  { l:'花长得很好。',                       s:'土是我自己配的，就不细说了。' },
+  { l:'夏天味道会重一点。',                 s:'开着窗就好。邻居问过一次，后来没再问。' },
+  { l:'你看这一页的字，和首页是同一个字体。', s:'我没舍得换。换了就不像我了。' },
+  { l:'你现在离屏幕挺近的。',               s:'不用往后靠。我又碰不到你。' },
+  { l:'上一个走到这儿的人，站得比你久。',    s:'他后来没再往回走。' },
+  { l:'别紧张。',                           s:'首页那么多人说我温柔，那句也是真的。' },
+  { l:'我确实温柔。',                       s:'洗得干干净净，摆得整整齐齐，一点没糟蹋。' },
+  { l:'留白是最要紧的。',                   s:'空出来的地方，总要拿来放点什么。' },
+  { l:'你已经站了很久了。',                 s:'我很有耐心。这一页我等了很多年。' },
+  { l:'好了。',                             s:'谢谢你陪我站这一会儿。' },
 ];
+
+/* 标签页标题也在悄悄变。没人会第一时间发现。 */
+const TABS = ['404','404','404','404','·','·','·','还在','还在','你还在','你还在','好了','好了'];
 
 const $ = id => document.getElementById(id);
 let i = 0;
@@ -165,70 +122,22 @@ $('peel').addEventListener('click', () => {
 
   $('line').textContent = ACTS[i].l;
   $('sub').textContent  = ACTS[i].s;
+  document.title = TABS[i];
 
-  if (i === 1) { document.body.classList.add('raw'); $('ooze').classList.add('on'); }
-  if (i === 4) document.body.classList.add('deep');
-  if (i >= 5) spawnBugs(3 + i);
+  // 唯一的视觉变化：留白变多，字距变松，副标题变淡。
+  // 内容越不像话，页面越从容——这是全部的机关。
+  document.documentElement.style.setProperty('--air', (i * 0.026).toFixed(3) + 'em');
 
-  // 腐烂程度
-  document.documentElement.style.setProperty('--rot', Math.min(i / 6, 1).toFixed(2));
-
-  // 越骂越站不住
-  const t = (Math.random()*2-1) * Math.min(i*0.5, 3.2);
-  const s = (Math.random()*2-1) * Math.min(i*3, 16);
-  document.documentElement.style.setProperty('--tilt', t.toFixed(2)+'deg');
-  document.documentElement.style.setProperty('--shift', s.toFixed(1)+'px');
-
-  // 抽一下
-  if (i >= 3) {
-    document.body.classList.remove('spasm'); void document.body.offsetWidth;
-    document.body.classList.add('spasm');
-  }
-
-  const L = ['…还有呢','说','嗯','继续','然后呢','……','你说','别停','看','够了'];
-  $('peel').textContent = L[Math.min(i, L.length-1)];
+  const L = ['…还有呢','嗯','然后呢','……','你说','继续','……','好','…','嗯','……','好','够了'];
+  $('peel').textContent = L[Math.min(i, L.length - 1)];
 
   i++;
 
   if (i === ACTS.length) {
-    $('peel').disabled = true; $('peel').style.opacity = .25;
-    setTimeout(() => {
-      document.documentElement.style.setProperty('--tilt','0deg');
-      document.documentElement.style.setProperty('--shift','0px');
-      $('coda').classList.add('on'); $('stamp').classList.add('on');
-    }, 1000);
+    $('peel').disabled = true;
+    $('peel').style.opacity = .25;
+    setTimeout(() => $('coda').classList.add('on'), 1400);
   }
-});
-
-/* 爬上来的东西 */
-function spawnBugs(n){
-  for (let k = 0; k < n; k++) {
-    const b = document.createElement('div');
-    b.className = 'bug';
-    const sz = 3 + Math.random()*4;
-    b.style.width = sz+'px'; b.style.height = (sz*0.55)+'px';
-    b.style.left = Math.random()*100 + 'vw';
-    b.style.top  = (100 + Math.random()*10) + 'vh';
-    document.body.appendChild(b);
-    const drift = (Math.random()*2-1) * 30;
-    b.animate(
-      [{transform:'translate(0,0) rotate(0deg)'},
-       {transform:`translate(${drift}vw,-${110+Math.random()*20}vh) rotate(${Math.random()*720-360}deg)`}],
-      {duration: 14000 + Math.random()*12000, easing:'linear'}
-    ).onfinish = () => b.remove();
-  }
-}
-
-/* 戳它 */
-let hit = 0;
-$('num').addEventListener('click', () => {
-  hit++;
-  const n = $('num');
-  n.style.transform = `translate(${(Math.random()*2-1)*24}px, ${(Math.random()*2-1)*13}px)`;
-  setTimeout(() => n.style.transform = '', 200);
-  if (hit === 8)  $('sub').textContent = '别戳。那儿还连着。';
-  if (hit === 16) $('sub').textContent = '你手上沾到了。';
-  if (hit === 24) { $('sub').textContent = '（有东西顺着你的手指往上爬）'; spawnBugs(14); }
 });
 </script>
 </body>
