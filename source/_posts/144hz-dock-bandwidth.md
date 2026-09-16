@@ -5,6 +5,7 @@ tags:
   - macOS
   - 显示器
   - 硬件
+cover: /img/cover-144hz.jpg
 categories:
   - 折腾记录
 ---
