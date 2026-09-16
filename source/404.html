@@ -19,10 +19,12 @@
   body{
     background:var(--bg); color:var(--fg);
     font-family:'LXGW WenKai Screen',-apple-system,'PingFang SC',serif;
-    display:flex;align-items:center;justify-content:center;
+    /* 用 margin:auto 而不是 align-items:center —— 后者在内容超过视口高度时，
+       上方溢出的部分会滚不回去（留白撑开后 404 会被吃掉） */
+    display:flex;
     min-height:100vh;padding:28px 18px;
   }
-  .wrap{width:100%;max-width:560px;text-align:center}
+  .wrap{width:100%;max-width:560px;text-align:center;margin:auto}
 
   .num{
     font-size:clamp(76px,20vw,132px);font-weight:400;line-height:1;
