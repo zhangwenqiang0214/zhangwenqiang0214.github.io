@@ -18,6 +18,9 @@ categories:
 
 我想做个能**在两种比例之间平滑切换**的东西。
 
+> 🪐 **[点这里直接打开 → solar.zhangwenqiang.com](https://solar.zhangwenqiang.com)**
+> 代码也开源了：[github.com/zhangwenqiang0214/solar-system-3d](https://github.com/zhangwenqiang0214/solar-system-3d)
+
 <!-- more -->
 
 ## 它是什么
@@ -62,6 +65,26 @@ categories:
 最后 `node build.mjs` 打出一个 **11.2MB 的单文件 HTML**，所有贴图以 base64 嵌在里面。
 
 11MB 对网页来说不小，但它换来的是：**拷给任何人，双击就能用**。不用起服务器，不用连网，不用解释"你先装个 Node"。给小孩看、给长辈看、拷到没网的电脑上看，都行。
+
+### 后来加了个网页版
+
+为了能挂到网上，又加了一种构建模式：
+
+```bash
+node build.mjs --web
+```
+
+贴图不再内嵌，而是作为独立文件按需加载。**HTML 从 11MB 降到 3.2KB**，打开就见画面，贴图在后面慢慢补上。
+
+两种产物各有各的用处——单文件版适合拷给人，网页版适合挂网站。构建脚本里用一个 `--web` 参数切换 esbuild 的 loader（`dataurl` 换成 `file`），二十行代码的事。
+
+## 开源了
+
+代码在 **[github.com/zhangwenqiang0214/solar-system-3d](https://github.com/zhangwenqiang0214/solar-system-3d)**，MIT 协议。
+
+在线版：**[solar.zhangwenqiang.com](https://solar.zhangwenqiang.com)**
+
+贴图来自 Solar System Scope，CC BY 4.0，用的时候记得保留署名。
 
 ## 为什么做这个
 

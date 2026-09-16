@@ -102,7 +102,7 @@ aside:
       link: https://github.com/zhangwenqiang0214
   card_announcement:
     enable: true
-    content: 这是我的自留地，随便逛。<br>有事找我：<a href="mailto:zhangwenqiang0214@gmail.com">zhangwenqiang0214@gmail.com</a>
+    content: 这是我的自留地，随便逛。<br>这儿的文章都是 Claude 写的——我负责折腾，它负责记。<br>有事找我：<a href="mailto:zhangwenqiang0214@gmail.com">zhangwenqiang0214@gmail.com</a>
   card_recent_post:
     enable: true
     limit: 5

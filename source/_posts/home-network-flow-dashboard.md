@@ -17,6 +17,8 @@ categories:
 
 于是有了这块大屏。
 
+> 🛰️ 整套配置已开源：[github.com/zhangwenqiang0214/home-netflow-dashboard](https://github.com/zhangwenqiang0214/home-netflow-dashboard)
+
 <!-- more -->
 
 ## 它长什么样
@@ -71,6 +73,20 @@ dictHas('dictionaries.china_ip', src_addr)
 **元数据比内容更有用。** 我不需要知道某台设备传了什么，只需要知道它「凌晨三点还在跟境外某个 IP 持续通信」。后者才是异常信号，而且不用碰任何隐私内容。
 
 **别让监控系统影响被监控的对象。** softflowd 跑在路由器上，内存和 CPU 都要省着用；重活全放到云端。家里的网卡了，再漂亮的大屏也没意义。
+
+## 开源了
+
+整套东西放上去了：**[github.com/zhangwenqiang0214/home-netflow-dashboard](https://github.com/zhangwenqiang0214/home-netflow-dashboard)**
+
+包含 docker-compose、ClickHouse 建表与视图、Grafana 大屏 JSON、路由器侧脚本，以及那份中国 IP 段字典。MIT 协议。
+
+整理的时候顺手做了两件事。
+
+一是**把踩过的坑写进 README**。比如 Grafana 千万别用 `latest`——它启动时会联网更新自带插件，网络不畅就一直卡着，HTTP 端口永不就绪，表现是"容器起来了但页面打不开"。这个坑当时找了很久，现在锁版本 + 关掉插件预装的配置直接写进 compose 了。
+
+二是**把设备清单换成了示例数据**。原来那个 `devices.csv` 里是我家 19 台设备的 MAC 地址、内网 IP 和名字——摄像头、音箱、每个人的手机、NAS。那是一份完整的家庭画像，绝不能公开。仓库里现在是虚构的示例，MAC 用的是文档保留段，真实文件写进了 `.gitignore`。
+
+**做这类自建监控，最容易忽略的就是：你收集的数据本身，就是最该保护的东西。**
 
 ## 一点感受
 
