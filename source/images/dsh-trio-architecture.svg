@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="853" viewBox="0 0 680 853" role="img" aria-labelledby="title description">
+  <title id="title">DSH Trio 的连接与会话存储</title>
+  <desc id="description">Chat 经 HTTPS 请求无状态网关，SSE 回传，网关经 HTTPS 访问 DeepSeek API。Chat 历史保存在 iPhone。Work 和 Code 使用 WSS 承载 DLP，经同一 Relay 到达云端和 Mac。两个连接器主动连接 Relay，并通过本机 HTTP RPC 或 WebSocket mux 访问 DSH。Work 会话保存在云端持久卷，Code 会话保存在 Mac 本地。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto-start-reverse">
+      <path d="M0 0 7 3.5 0 7Z" fill="#9db7d5"/>
+    </marker>
+    <style>
+      text { font-family: system-ui, -apple-system, "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #eff6ff; }
+      .name { font-size: 24px; font-weight: 700; }
+      .label { font-size: 21px; }
+      .protocol { font-size: 20px; font-weight: 600; fill: #c6dcf4; }
+      .muted { fill: #b6c9e0; }
+      .chat { fill: #7de4f2; }
+      .work { fill: #92ebbc; }
+      .code { fill: #ffc77e; }
+      .panel { fill: #11243a; stroke: #2c4765; stroke-width: 1.5; }
+      .node { fill: #1b3450; stroke: #375979; stroke-width: 1.5; }
+      .flow { fill: none; stroke: #9db7d5; stroke-width: 2; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="680" height="853" rx="22" fill="#0a1728"/>
+  <text class="muted" x="27" y="37" font-size="18" font-weight="700" letter-spacing="3">DSH TRIO</text>
+  <text x="27" y="74" font-size="31" font-weight="700">三种模式的连接与会话存储</text>
+
+  <rect class="panel" x="24" y="99" width="632" height="188" rx="17"/>
+  <text class="name chat" x="46" y="140">Chat</text>
+  <rect x="371" y="115" width="263" height="36" rx="10" fill="#123e4c"/>
+  <text class="label chat" x="502" y="140" text-anchor="middle">会话历史 · iPhone 本地</text>
+
+  <g text-anchor="middle">
+    <rect class="node" x="46" y="171" width="142" height="92" rx="11"/>
+    <text class="name" x="117" y="209">iPhone</text>
+    <text class="label muted" x="117" y="239">Chat 入口</text>
+
+    <rect class="node" x="280" y="171" width="132" height="92" rx="11"/>
+    <text class="name" x="346" y="209">Chat 网关</text>
+    <text class="label muted" x="346" y="239">无状态</text>
+
+    <rect class="node" x="500" y="171" width="134" height="92" rx="11"/>
+    <text x="567" y="209" font-size="19" font-weight="700">DeepSeek API</text>
+    <text class="label muted" x="567" y="239">模型推理</text>
+
+    <text class="protocol" x="234" y="197">HTTPS</text>
+    <text class="protocol" x="234" y="221">SSE 回传</text>
+    <path class="flow" d="M198 240H270" marker-start="url(#arrow)"/>
+
+    <text class="protocol" x="456" y="218">HTTPS</text>
+    <path class="flow" d="M422 240H490" marker-start="url(#arrow)"/>
+  </g>
+
+  <rect class="panel" x="24" y="309" width="632" height="520" rx="17"/>
+  <text class="name" x="46" y="349"><tspan class="work">Work</tspan><tspan class="muted"> / </tspan><tspan class="code">Code</tspan></text>
+
+  <rect class="node" x="209" y="366" width="262" height="49" rx="11"/>
+  <text class="name" x="340" y="398" text-anchor="middle">iPhone App</text>
+  <path class="flow" d="M340 421V466" marker-start="url(#arrow)"/>
+  <text class="protocol" x="358" y="449">WSS / DLP</text>
+
+  <rect class="node" x="190" y="473" width="300" height="56" rx="11"/>
+  <text class="name" x="340" y="509" text-anchor="middle">Relay · 鉴权与路由</text>
+  <path class="flow" d="M182 602V559H250V535" marker-start="url(#arrow)"/>
+  <path class="flow" d="M498 602V559H430V535" marker-start="url(#arrow)"/>
+  <text class="protocol" x="340" y="567" text-anchor="middle">WSS / DLP</text>
+  <text class="label muted" x="340" y="594" text-anchor="middle">连接器主动连 Relay</text>
+
+  <rect class="node" x="46" y="608" width="272" height="200" rx="12"/>
+  <text class="name work" x="65" y="642">Work · 云端 Docker</text>
+  <text class="label" x="65" y="675">连接器</text>
+  <path class="flow" d="M75 685V722"/>
+  <text class="protocol" x="97" y="711">HTTP RPC / WS mux</text>
+  <text class="name" x="65" y="750">云端 DSH 宿主</text>
+  <rect x="63" y="764" width="238" height="34" rx="8" fill="#164235"/>
+  <text class="label work" x="182" y="788" text-anchor="middle">会话历史 · 持久卷</text>
+
+  <rect class="node" x="362" y="608" width="272" height="200" rx="12"/>
+  <text class="name code" x="381" y="642">Code · Mac</text>
+  <text class="label" x="381" y="675">连接器</text>
+  <path class="flow" d="M391 685V722"/>
+  <text class="protocol" x="413" y="711">HTTP RPC / WS mux</text>
+  <text class="name" x="381" y="750">Mac DSH 宿主</text>
+  <rect x="379" y="764" width="238" height="34" rx="8" fill="#463821"/>
+  <text class="label code" x="498" y="788" text-anchor="middle">会话历史 · Mac 本地</text>
+</svg>

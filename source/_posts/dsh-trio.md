@@ -25,6 +25,8 @@ DSH Trio 就是从这三个场景做出来的。iPhone 上有 Chat、Work、Code
 | Work | 云端 Docker 容器里的 DSH | 云端 DSH 宿主 | WSS / DLP，经 relay 到云端连接器 |
 | Code | Mac 上的 DSH | Mac 上的 DSH 宿主 | WSS / DLP，经 relay 到 Mac 连接器 |
 
+![DSH Trio 架构图。Chat 经 HTTPS 和 SSE 访问网关，再由网关请求 DeepSeek API，历史留在 iPhone。Work 和 Code 经 WSS 承载 DLP 连接同一个 Relay，分别由云端与 Mac 的连接器接到本机 DSH。Work 会话存于云端持久卷，Code 会话存于 Mac 本地。](/images/dsh-trio-architecture.svg)
+
 App 用 SwiftUI 写，Swift 协议层 DSHKit 负责 RPC 和会话事件。中转和 Chat 网关用 Python/aiohttp，连接器跑在 Node.js/Cordis 上。Work 和 Code 共用一套协议和连接器，App 给它们各自维护连接状态。切到 Code 时，打开的是 Mac 上那条会话。切回 Work 时，看到的仍是云端任务的进度。
 
 ## Chat 的历史留在手机
@@ -54,7 +56,3 @@ Work 首页能看 CPU、内存和工作区所在磁盘。CPU 和内存取自容�
 手机打开 Mac 上的会话时，先分页取历史，再从游标跟随后续事件。子 agent 还需要一组复合地址，由父会话 ID、子会话 ID 和模式共同定位。正文、工具执行和审批都跟着宿主的会话走。
 
 两端能打开同一条会话，写入仍得由宿主裁决。锁定版 DSH 遇到另一进程占着写句柄，会返回 `session/writer-held`。手机会保留本次发送内容并提示写权冲突。即使列表上显示会话空闲，持有写句柄的另一端也可能还没释放。派生桌面方案让桌面窗口、同宿主的浏览器和手机共用一个 Host，由它核对空闲状态并处理用户显式发起的接管。这个方案已有候选实现，手机和桌面的双向接管还待完整真机验收。
-
-## 目前跑到了哪
-
-iPhone 真机已跑过三种模式的基础收发、Chat 的搜索与识图。Work 也做过一次容器重启验证，重连后能从手机打开原会话和文件。DSH Trio 目前是自用开发版，完整真机验收和源码公开前的检查仍在进行。
